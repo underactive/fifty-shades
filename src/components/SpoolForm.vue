@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, toRaw, watch } from 'vue';
 import type { Spool } from '../lib/types';
 import { DIAMETERS, MATERIALS, WEIGHTS, materialPreset } from '../lib/materials';
 import { normalizeHex } from '../lib/colors';
@@ -23,7 +23,7 @@ function newId(): string {
 function makeForm(s: Spool | null) {
   const preset = MATERIALS[0];
   const base: Spool = s
-    ? structuredClone(s)
+    ? structuredClone(toRaw(s))
     : {
         id: newId(),
         name: '',
@@ -86,7 +86,7 @@ const previewSpool = computed<Spool>(() => ({
 
 function save() {
   if (!valid.value) return;
-  const clean: Spool = structuredClone(form);
+  const clean: Spool = structuredClone(toRaw(form));
   clean.color.hex = '#' + normalizeHex(clean.color.hex);
   clean.count = Math.max(0, Math.round(Number(clean.count) || 0));
   if (clean.purchase && !clean.purchase.vendor && !clean.purchase.date && clean.purchase.price == null) {
