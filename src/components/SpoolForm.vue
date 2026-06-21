@@ -112,6 +112,7 @@ function save() {
         </div>
 
         <div class="grid">
+          <!-- Identity -->
           <div class="field span2">
             <label for="f-name">Name *</label>
             <input id="f-name" v-model="form.name" class="input" placeholder="Galaxy Black" />
@@ -127,6 +128,7 @@ function save() {
             </select>
           </div>
 
+          <!-- Color -->
           <div class="field">
             <label for="f-colorname">Color name</label>
             <input id="f-colorname" v-model="form.color.name" class="input" placeholder="Galaxy Black" />
@@ -140,7 +142,8 @@ function save() {
             <input id="f-hex" v-model="form.color.hex" class="input" :class="{ bad: !hexValid }" placeholder="#1b1b2a" />
           </div>
 
-          <div class="field tri">
+          <!-- Temperatures -->
+          <div class="field span2">
             <label>Nozzle °C (min / max)</label>
             <div class="row">
               <input v-model.number="form.temps.nozzleMin" class="input" type="number" inputmode="numeric" />
@@ -156,6 +159,7 @@ function save() {
             <button type="button" class="btn btn-ghost" @click="loadPresets">Load {{ form.type }} presets</button>
           </div>
 
+          <!-- Dimensions -->
           <div class="field">
             <label for="f-count">Count</label>
             <input id="f-count" v-model.number="form.count" class="input" type="number" min="0" />
@@ -174,6 +178,7 @@ function save() {
             </datalist>
           </div>
 
+          <!-- Purchase -->
           <div class="field span2">
             <label for="f-vendor">Bought from</label>
             <input id="f-vendor" v-model="form.purchase!.vendor" class="input" placeholder="Prusa, Amazon…" />
@@ -182,6 +187,8 @@ function save() {
             <label for="f-date">Purchase date</label>
             <input id="f-date" v-model="form.purchase!.date" class="input" type="date" />
           </div>
+
+          <!-- Price & Storage -->
           <div class="field span2">
             <label for="f-price">Price</label>
             <div class="row">
@@ -189,11 +196,12 @@ function save() {
               <input v-model="form.purchase!.currency" class="input cur" placeholder="USD" />
             </div>
           </div>
-
           <div class="field span2">
             <label for="f-storage">Storage</label>
             <input id="f-storage" v-model="form.storage" class="input" placeholder="Drybox A, shelf 2…" />
           </div>
+
+          <!-- Notes -->
           <div class="field span4">
             <label for="f-notes">Notes</label>
             <textarea id="f-notes" v-model="form.notes" class="input" rows="2" placeholder="Prints clean, low stringing…"></textarea>
@@ -269,9 +277,6 @@ function save() {
 }
 .span4 {
   grid-column: span 4;
-}
-.tri {
-  grid-column: span 1;
 }
 .row {
   display: flex;
