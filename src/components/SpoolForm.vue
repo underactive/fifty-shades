@@ -296,11 +296,8 @@ function save() {
 .purchase-price,
 .purchase-vendor,
 .purchase-date {
-  grid-column: span 1;
+  display: none;
 }
-.purchase-price { grid-column: 1; grid-row: 5; }
-.purchase-vendor { grid-column: 2; grid-row: 5; }
-.purchase-date { grid-column: 3; grid-row: 5; }
 .count-select {
   font-family: var(--font-mono);
   font-size: 0.66rem;
