@@ -170,7 +170,7 @@ function save() {
               <option v-for="d in DIAMETERS" :key="d" :value="d">{{ d }}</option>
             </select>
           </div>
-          <div class="field">
+          <div class="field span2">
             <label for="f-weight">Weight (g)</label>
             <input id="f-weight" v-model.number="form.weightGrams" class="input" type="number" list="weight-list" min="0" />
             <datalist id="weight-list">
@@ -179,11 +179,11 @@ function save() {
           </div>
 
           <!-- Purchase -->
-          <div class="field span2">
+          <div class="field">
             <label for="f-price">Price</label>
             <input id="f-price" v-model.number="form.purchase!.price" class="input" type="number" step="0.01" min="0" placeholder="29.99" />
           </div>
-          <div class="field">
+          <div class="field span2">
             <label for="f-vendor">Bought from</label>
             <input id="f-vendor" v-model="form.purchase!.vendor" class="input" placeholder="Prusa, Amazon…" />
           </div>
