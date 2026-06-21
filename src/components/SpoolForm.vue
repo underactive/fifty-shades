@@ -172,7 +172,7 @@ function save() {
               <option v-for="d in DIAMETERS" :key="d" :value="d">{{ d }}</option>
             </select>
           </div>
-          <div class="field">
+          <div class="field span2">
             <label for="f-weight">Weight (g)</label>
             <input id="f-weight" v-model.number="form.weightGrams" class="input" type="number" list="weight-list" min="0" />
             <datalist id="weight-list">
@@ -180,16 +180,16 @@ function save() {
             </datalist>
           </div>
 
-          <!-- Purchase -->
-          <div class="field">
+          <!-- Purchase (explicit row to avoid auto-flow collision with dimensions) -->
+          <div class="field purchase-price">
             <label for="f-price">Price</label>
             <input id="f-price" v-model.number="form.purchase!.price" class="input" type="number" step="0.01" min="0" placeholder="29.99" />
           </div>
-          <div class="field span2">
+          <div class="field purchase-vendor">
             <label for="f-vendor">Bought from</label>
             <input id="f-vendor" v-model="form.purchase!.vendor" class="input" placeholder="Prusa, Amazon…" />
           </div>
-          <div class="field">
+          <div class="field purchase-date">
             <label for="f-date">Purchase date</label>
             <input id="f-date" v-model="form.purchase!.date" class="input" type="date" />
           </div>
@@ -288,6 +288,14 @@ function save() {
   text-transform: uppercase;
   letter-spacing: 0.09em;
 }
+.purchase-price,
+.purchase-vendor,
+.purchase-date {
+  grid-column: span 1;
+}
+.purchase-price { grid-column: 1; grid-row: 5; }
+.purchase-vendor { grid-column: 2; grid-row: 5; }
+.purchase-date { grid-column: 3; grid-row: 5; }
 .count-select {
   font-family: var(--font-mono);
   font-size: 0.66rem;
