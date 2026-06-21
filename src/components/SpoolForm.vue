@@ -188,15 +188,15 @@ function save() {
             <input id="f-date" v-model="form.purchase!.date" class="input" type="date" />
           </div>
 
-          <!-- Price & Storage -->
-          <div class="field span2">
+          <!-- Price -->
+          <div class="field span4">
             <label for="f-price">Price</label>
             <div class="row">
               <input id="f-price" v-model.number="form.purchase!.price" class="input" type="number" step="0.01" min="0" placeholder="29.99" />
               <input v-model="form.purchase!.currency" class="input cur" placeholder="USD" />
             </div>
           </div>
-          <div class="field span2">
+          <div class="field span4">
             <label for="f-storage">Storage</label>
             <input id="f-storage" v-model="form.storage" class="input" placeholder="Drybox A, shelf 2…" />
           </div>
