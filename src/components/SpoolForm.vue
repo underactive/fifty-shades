@@ -180,21 +180,16 @@ function save() {
 
           <!-- Purchase -->
           <div class="field span2">
+            <label for="f-price">Price</label>
+            <input id="f-price" v-model.number="form.purchase!.price" class="input" type="number" step="0.01" min="0" placeholder="29.99" />
+          </div>
+          <div class="field">
             <label for="f-vendor">Bought from</label>
             <input id="f-vendor" v-model="form.purchase!.vendor" class="input" placeholder="Prusa, Amazon…" />
           </div>
           <div class="field">
             <label for="f-date">Purchase date</label>
             <input id="f-date" v-model="form.purchase!.date" class="input" type="date" />
-          </div>
-
-          <!-- Price -->
-          <div class="field span4">
-            <label for="f-price">Price</label>
-            <div class="row">
-              <input id="f-price" v-model.number="form.purchase!.price" class="input" type="number" step="0.01" min="0" placeholder="29.99" />
-              <input v-model="form.purchase!.currency" class="input cur" placeholder="USD" />
-            </div>
           </div>
           <div class="field span4">
             <label for="f-storage">Storage</label>
@@ -281,9 +276,6 @@ function save() {
 .row {
   display: flex;
   gap: 0.4rem;
-}
-.cur {
-  max-width: 64px;
 }
 .swatch {
   flex: none;
