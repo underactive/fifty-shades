@@ -97,7 +97,7 @@ function save() {
 </script>
 
 <template>
-  <div class="modal-backdrop" @click.self="emit('close')" @keydown.esc="emit('close')">
+  <div class="modal-backdrop" @keydown.esc="emit('close')">
     <form class="panel modal-card form" @submit.prevent="save">
       <header class="form-head">
         <h2>{{ isNew ? 'New spool' : 'Edit spool' }}</h2>
@@ -278,7 +278,11 @@ function save() {
   gap: 0.4rem;
 }
 .cur {
-  max-width: 64px;
+  flex: 0 0 130px;
+}
+.row .input:first-child {
+  flex: 1;
+  min-width: 0;
 }
 .color-row {
   display: flex;
