@@ -275,6 +275,7 @@ function save() {
   border: 1px solid var(--color-kraft-line);
   border-radius: 3px;
   box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.6);
+  transform: rotate(-1.5deg);
   font-family: var(--font-mono);
 }
 .count-tag label {
