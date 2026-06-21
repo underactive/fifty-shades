@@ -108,6 +108,12 @@ function save() {
         <!-- Live preview -->
         <div class="preview">
           <div class="preview-reel"><SpoolReel :spool="previewSpool" /></div>
+          <div class="count-tag">
+            <label for="f-count">Count</label>
+            <select id="f-count" v-model.number="form.count" class="count-select">
+              <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+            </select>
+          </div>
           <span class="preview-hint">live preview</span>
         </div>
 
@@ -161,16 +167,12 @@ function save() {
 
           <!-- Dimensions -->
           <div class="field">
-            <label for="f-count">Count</label>
-            <input id="f-count" v-model.number="form.count" class="input" type="number" min="0" />
-          </div>
-          <div class="field">
             <label for="f-dia">Diameter (mm)</label>
             <select id="f-dia" v-model.number="form.diameter" class="input">
               <option v-for="d in DIAMETERS" :key="d" :value="d">{{ d }}</option>
             </select>
           </div>
-          <div class="field span2">
+          <div class="field">
             <label for="f-weight">Weight (g)</label>
             <input id="f-weight" v-model.number="form.weightGrams" class="input" type="number" list="weight-list" min="0" />
             <datalist id="weight-list">
@@ -259,6 +261,39 @@ function save() {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #6b5631;
+}
+.count-tag {
+  margin-top: -6px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.45rem 0.28rem 0.4rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.06)),
+    var(--color-kraft);
+  color: #2a2012;
+  border: 1px solid var(--color-kraft-line);
+  border-radius: 3px;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-mono);
+}
+.count-tag label {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: #6b5631;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.count-select {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  padding: 0.15rem 0.3rem;
+  border: 1px solid var(--color-kraft-line);
+  border-radius: 2px;
+  background: #fffdf6;
+  color: #2a2012;
+  cursor: pointer;
 }
 .grid {
   flex: 1;
