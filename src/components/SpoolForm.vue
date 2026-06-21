@@ -30,7 +30,7 @@ function makeForm(s: Spool | null) {
         manufacturer: '',
         type: 'PLA',
         color: { name: '', hex: '#3aa0e0' },
-        temps: { nozzleMin: preset.nozzleMin, nozzleMax: preset.nozzleMax, bed: preset.bed },
+        temps: { nozzleMin: preset.nozzleMin, nozzleMax: preset.nozzleMax, bedMin: preset.bed, bedMax: preset.bed },
         count: 1,
         diameter: 1.75,
         weightGrams: 1000,
@@ -53,7 +53,8 @@ watch(
     if (p) {
       form.temps.nozzleMin = p.nozzleMin;
       form.temps.nozzleMax = p.nozzleMax;
-      form.temps.bed = p.bed;
+      form.temps.bedMin = p.bed;
+      form.temps.bedMax = p.bed;
     }
   }
 );
@@ -63,7 +64,8 @@ function loadPresets() {
   if (p) {
     form.temps.nozzleMin = p.nozzleMin;
     form.temps.nozzleMax = p.nozzleMax;
-    form.temps.bed = p.bed;
+    form.temps.bedMin = p.bed;
+    form.temps.bedMax = p.bed;
   }
 }
 
@@ -157,8 +159,11 @@ function save() {
             </div>
           </div>
           <div class="field">
-            <label for="f-bed">Bed °C</label>
-            <input id="f-bed" v-model.number="form.temps.bed" class="input" type="number" inputmode="numeric" />
+            <label>Bed °C (min / max)</label>
+            <div class="row">
+              <input v-model.number="form.temps.bedMin" class="input" type="number" inputmode="numeric" />
+              <input v-model.number="form.temps.bedMax" class="input" type="number" inputmode="numeric" />
+            </div>
           </div>
           <div class="field presets-cell">
             <label>&nbsp;</label>

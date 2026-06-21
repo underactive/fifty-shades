@@ -11,7 +11,8 @@ export interface SpoolColor {
 export interface SpoolTemps {
   nozzleMin: number;
   nozzleMax: number;
-  bed: number;
+  bedMin: number;
+  bedMax: number;
 }
 
 export interface SpoolPurchase {
