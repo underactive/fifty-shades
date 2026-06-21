@@ -132,11 +132,12 @@ function save() {
             <input id="f-colorname" v-model="form.color.name" class="input" placeholder="Galaxy Black" />
           </div>
           <div class="field">
+            <label>&nbsp;</label>
+            <input type="color" v-model="colorPicker" class="swatch" aria-label="Pick color" />
+          </div>
+          <div class="field">
             <label for="f-hex">Color *</label>
-            <div class="color-row">
-              <input type="color" v-model="colorPicker" class="swatch" aria-label="Pick color" />
-              <input id="f-hex" v-model="form.color.hex" class="input" :class="{ bad: !hexValid }" placeholder="#1b1b2a" />
-            </div>
+            <input id="f-hex" v-model="form.color.hex" class="input" :class="{ bad: !hexValid }" placeholder="#1b1b2a" />
           </div>
 
           <div class="field tri">
@@ -181,7 +182,7 @@ function save() {
             <label for="f-date">Purchase date</label>
             <input id="f-date" v-model="form.purchase!.date" class="input" type="date" />
           </div>
-          <div class="field">
+          <div class="field span2">
             <label for="f-price">Price</label>
             <div class="row">
               <input id="f-price" v-model.number="form.purchase!.price" class="input" type="number" step="0.01" min="0" placeholder="29.99" />
@@ -277,16 +278,7 @@ function save() {
   gap: 0.4rem;
 }
 .cur {
-  flex: 0 0 130px;
-}
-.row:has(.cur) .input:first-child {
-  flex: 1;
-  min-width: 0;
-}
-.color-row {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
+  max-width: 64px;
 }
 .swatch {
   flex: none;
