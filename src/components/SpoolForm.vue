@@ -122,10 +122,9 @@ function save() {
           </div>
           <div class="field">
             <label for="f-type">Material *</label>
-            <input id="f-type" v-model="form.type" class="input" list="material-list" placeholder="PLA" />
-            <datalist id="material-list">
-              <option v-for="m in MATERIALS" :key="m.key" :value="m.key" />
-            </datalist>
+            <select id="f-type" v-model="form.type" class="input">
+              <option v-for="m in MATERIALS" :key="m.key" :value="m.key">{{ m.label }}</option>
+            </select>
           </div>
 
           <div class="field">
@@ -280,7 +279,7 @@ function save() {
 .cur {
   flex: 0 0 130px;
 }
-.row .input:first-child {
+.row:has(.cur) .input:first-child {
   flex: 1;
   min-width: 0;
 }
