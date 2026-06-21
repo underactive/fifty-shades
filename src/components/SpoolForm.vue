@@ -256,6 +256,9 @@ function save() {
 .preview-reel {
   pointer-events: none;
 }
+.preview-reel :deep(.tag::before) {
+  display: none;
+}
 .preview-hint {
   font-size: 0.58rem;
   letter-spacing: 0.12em;
