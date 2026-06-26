@@ -86,6 +86,7 @@ const ariaLabel = computed(() => {
     <span class="tag">
       <span class="tag-chip" :style="{ background: hex, color: chipText }"></span>
       <span class="tag-text">
+        <span class="tag-color">{{ spool.color.name || 'No color' }}</span>
         <span class="tag-name">{{ spool.name || 'Untitled' }}</span>
         <span class="tag-maker">{{ spool.manufacturer || '—' }}</span>
       </span>
@@ -99,7 +100,7 @@ const ariaLabel = computed(() => {
   flex-direction: column;
   align-items: center;
   gap: 0;
-  width: 118px;
+  width: 153px;
   padding: 0;
   background: none;
   border: none;
@@ -108,8 +109,8 @@ const ariaLabel = computed(() => {
 }
 
 .reel {
-  width: 104px;
-  height: 104px;
+  width: 135px;
+  height: 135px;
   filter: drop-shadow(0 8px 7px rgba(0, 0, 0, 0.5));
   transition: transform 0.16s ease;
 }
@@ -145,7 +146,7 @@ const ariaLabel = computed(() => {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  max-width: 116px;
+  max-width: 150px;
   padding: 0.28rem 0.45rem 0.28rem 0.4rem;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.06)),
@@ -182,15 +183,22 @@ const ariaLabel = computed(() => {
   line-height: 1.05;
   min-width: 0;
 }
+.tag-color {
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .tag-name {
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .tag-maker {
-  font-size: 0.55rem;
+  font-size: 0.68rem;
   color: #6b5631;
   white-space: nowrap;
   overflow: hidden;
