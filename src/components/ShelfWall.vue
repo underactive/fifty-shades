@@ -5,6 +5,7 @@ import { INVENTORY_VERSION } from '../lib/types';
 import { ApiError, getInventory, saveInventory } from '../lib/api';
 import { materialPreset, shelfRank } from '../lib/materials';
 import { sortByRoygbiv } from '../lib/colors';
+import { newId } from '../lib/id';
 import Shelf from './Shelf.vue';
 import FilterBar from './FilterBar.vue';
 import SpoolForm from './SpoolForm.vue';
@@ -20,6 +21,7 @@ const typeFilter = ref('');
 
 const formOpen = ref(false);
 const editing = ref<Spool | null>(null);
+const siblings = ref<Spool[]>([]);
 
 const pin = ref('');
 const pinOpen = ref(false);
@@ -36,7 +38,7 @@ onMounted(async () => {
   pin.value = sessionStorage.getItem('fw-edit-pin') || '';
   try {
     const doc = await getInventory();
-    spools.value = doc.spools || [];
+    spools.value = (doc.spools || []).map((s: Spool) => s.spool_id ? s : { ...s, spool_id: newId() });
   } catch (e) {
     loadError.value = e instanceof Error ? e.message : 'Could not load inventory.';
   } finally {
@@ -146,25 +148,30 @@ function persist(next: Spool[]) {
 // ---- actions -----------------------------------------------------------
 function openNew() {
   editing.value = null;
+  siblings.value = [];
   formOpen.value = true;
 }
 function openEdit(spool: Spool) {
   editing.value = spool;
+  siblings.value = spool.spool_id
+    ? spools.value.filter((s) => s.spool_id === spool.spool_id)
+    : [spool];
   formOpen.value = true;
 }
-function onSave(spool: Spool) {
-  const idx = spools.value.findIndex((s) => s.id === spool.id);
-  const next =
-    idx >= 0 ? spools.value.map((s) => (s.id === spool.id ? spool : s)) : [...spools.value, spool];
+function onSave(newSpools: Spool[]) {
+  if (newSpools.length === 0) return;
+  const groupId = newSpools[0].spool_id;
+  let next: Spool[];
+  if (groupId && spools.value.some((s) => s.spool_id === groupId)) {
+    next = [...spools.value.filter((s) => s.spool_id !== groupId), ...newSpools];
+  } else {
+    next = [...spools.value, ...newSpools];
+  }
   formOpen.value = false;
   persist(next);
 }
-function onRemove(id: string) {
-  formOpen.value = false;
-  persist(spools.value.filter((s) => s.id !== id));
-}
 function loadSample() {
-  persist(structuredClone(SAMPLE_SPOOLS));
+  persist(structuredClone(SAMPLE_SPOOLS).map((s) => s.spool_id ? s : { ...s, spool_id: newId() }));
 }
 
 function exportJson() {
@@ -190,7 +197,7 @@ function onImportFile(e: Event) {
     try {
       const doc = JSON.parse(String(reader.result));
       if (!Array.isArray(doc.spools)) throw new Error('No "spools" array found');
-      persist(doc.spools);
+      persist(doc.spools.map((s: Spool) => s.spool_id ? s : { ...s, spool_id: newId() }));
     } catch (err) {
       flash('err', `Invalid file: ${err instanceof Error ? err.message : 'parse error'}`);
     }
@@ -266,7 +273,7 @@ function onImportFile(e: Event) {
       />
     </template>
 
-    <SpoolForm v-if="formOpen" :spool="editing" @save="onSave" @remove="onRemove" @close="formOpen = false" />
+    <SpoolForm v-if="formOpen" :spool="editing" :siblings="siblings" @save="onSave" @close="formOpen = false" />
     <PinPrompt v-if="pinOpen" :error="pinError" @submit="onPinSubmit" @close="pinOpen = false" />
   </div>
 </template>

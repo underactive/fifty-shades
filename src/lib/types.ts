@@ -25,6 +25,8 @@ export interface SpoolPurchase {
 
 export interface Spool {
   id: string;
+  /** Groups color variants of the same filament model. Generated client-side. */
+  spool_id?: string;
   name: string;
   manufacturer: string;
   /** Material key (e.g. "PLA"); decides which shelf the reel sits on. */
@@ -47,6 +49,14 @@ export interface Inventory {
   /** ISO timestamp of the last write; used for optimistic concurrency. */
   updatedAt: string;
   spools: Spool[];
+}
+
+/** Internal form state for a color variant in the gallery. */
+export interface GalleryVariant {
+  id: string;
+  spool_id: string;
+  color: SpoolColor;
+  count: number;
 }
 
 export const INVENTORY_VERSION = 1;

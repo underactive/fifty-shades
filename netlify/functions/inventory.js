@@ -109,7 +109,8 @@ function sanitizeInventory(input) {
 
     const nozzleMin = num(s.temps && s.temps.nozzleMin) ?? 0;
     const nozzleMax = num(s.temps && s.temps.nozzleMax) ?? 0;
-    const bed = num(s.temps && s.temps.bed) ?? 0;
+    const bedMin = num(s.temps && s.temps.bedMin) ?? 0;
+    const bedMax = num(s.temps && s.temps.bedMax) ?? 0;
 
     const purchase = s.purchase && typeof s.purchase === 'object' ? s.purchase : undefined;
 
@@ -122,7 +123,8 @@ function sanitizeInventory(input) {
       temps: {
         nozzleMin: Math.round(nozzleMin),
         nozzleMax: Math.round(nozzleMax),
-        bed: Math.round(bed),
+        bedMin: Math.round(bedMin),
+        bedMax: Math.round(bedMax),
       },
       count: Math.round(count),
       diameter: num(s.diameter) ?? 1.75,
@@ -138,6 +140,7 @@ function sanitizeInventory(input) {
           }
         : {}),
       ...(s.storage ? { storage: str(s.storage, 120).trim() } : {}),
+      ...(s.spool_id ? { spool_id: str(s.spool_id, 64) } : {}),
       ...(s.notes ? { notes: str(s.notes, 2000) } : {}),
     });
   }
