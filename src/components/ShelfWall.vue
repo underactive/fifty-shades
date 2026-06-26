@@ -18,6 +18,7 @@ const loadError = ref('');
 
 const query = ref('');
 const typeFilter = ref('');
+const colorFilter = ref<string | null>(null);
 
 const formOpen = ref(false);
 const editing = ref<Spool | null>(null);
@@ -51,12 +52,18 @@ const filtered = computed(() => {
   const q = query.value.trim().toLowerCase();
   return spools.value.filter((s) => {
     if (typeFilter.value && s.type !== typeFilter.value) return false;
+    if (colorFilter.value && s.color.hex.toLowerCase() !== colorFilter.value) return false;
     if (!q) return true;
     return [s.name, s.manufacturer, s.color.name, s.type].some((v) =>
       (v || '').toLowerCase().includes(q)
     );
   });
 });
+
+function toggleColor(hex: string) {
+  const h = hex.toLowerCase();
+  colorFilter.value = colorFilter.value === h ? null : h;
+}
 
 const groups = computed(() => {
   const map = new Map<string, Spool[]>();
@@ -242,9 +249,19 @@ function onImportFile(e: Event) {
           v-for="c in spectrum"
           :key="c.hex"
           class="swatch"
+          :class="{ active: colorFilter === c.hex.toLowerCase() }"
           :style="{ background: c.hex }"
           :title="`${c.name || c.hex} — ${c.count} spool${c.count === 1 ? '' : 's'}`"
+          @click="toggleColor(c.hex)"
         ></span>
+      </div>
+      <div v-if="colorFilter" class="color-filter-bar">
+        <span class="color-filter-label">
+          Showing only
+          <span class="color-dot" :style="{ background: colorFilter }"></span>
+          {{ spectrum.find((c) => c.hex.toLowerCase() === colorFilter)?.name || colorFilter }}
+        </span>
+        <button class="btn btn-ghost btn-xs" @click="colorFilter = null">Clear</button>
       </div>
 
       <FilterBar v-model:query="query" v-model:type="typeFilter" :types="presentTypes" />
@@ -362,9 +379,51 @@ function onImportFile(e: Event) {
   flex: 1 1 0;
   min-width: 3px;
   transition: flex-grow 0.15s ease;
+  cursor: pointer;
 }
 .spectrum .swatch:hover {
   flex-grow: 2.4;
+}
+.spectrum .swatch.active {
+  flex-grow: 3;
+  outline: 2px solid var(--color-brass);
+  outline-offset: -1px;
+}
+
+.color-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  margin-bottom: 0.8rem;
+  font-size: 0.78rem;
+  color: var(--color-ink-dim);
+}
+.color-filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.color-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.btn-xs {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 3px;
+  border: 1px solid var(--color-oak-dark);
+  background: transparent;
+  color: var(--color-ink-dim);
+  cursor: pointer;
+}
+.btn-xs:hover {
+  border-color: var(--color-brass);
+  color: var(--color-brass);
 }
 
 .empty {
